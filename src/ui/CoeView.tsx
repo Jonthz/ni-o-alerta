@@ -4,7 +4,7 @@ import type { Sector } from '../types';
 import { Button } from './components/Button';
 import { SectorMap } from './Map';
 
-export function CoeView({ embedded = false }: { embedded?: boolean }) {
+export function CoeView({ embedded = false, mobileFrame = false }: { embedded?: boolean; mobileFrame?: boolean }) {
   const { sectors, reports, signals, events, confirmations, deescalate, alertSpeechText, replayAlert } = useStore();
   const [selected, setSelected] = useState<Sector>(sectors.find((item) => item.id === 'flor-bastion') ?? sectors[0]);
   const [satellite, setSatellite] = useState(false);
@@ -52,7 +52,7 @@ export function CoeView({ embedded = false }: { embedded?: boolean }) {
   }, [confirmations, reports, sectors, signals]);
 
   return (
-    <main className={embedded ? 'coe coe-embedded' : 'coe'}>
+    <main className={`${embedded ? 'coe coe-embedded' : 'coe'} ${mobileFrame ? 'coe-mobile-frame' : ''}`.trim()}>
       <section className="map-wrap">
         <SectorMap sectors={sectors} reports={reports} events={events} dark satellite={satellite} onSectorClick={setSelected} />
         <div className="satellite-control">

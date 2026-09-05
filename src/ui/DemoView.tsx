@@ -13,19 +13,23 @@ export function DemoView() {
     <main className="demo">
       <section className="demo-left">
         <header className="demo-header">
-          <strong>Modo demostracion</strong>
+          <strong>Modo demostracion · vistas moviles</strong>
           <div className="demo-tabs">
             <Button variant={panel === 'whatsapp' ? 'default' : 'outline'} size="sm" onClick={() => setPanel('whatsapp')}>WhatsApp</Button>
             <Button variant={panel === 'app' ? 'default' : 'outline'} size="sm" onClick={() => setPanel('app')}>App offline</Button>
             <Button variant={panel === 'promotor' ? 'default' : 'outline'} size="sm" onClick={() => setPanel('promotor')}>Promotor</Button>
           </div>
         </header>
-        <div className="demo-panel">
-          {panel === 'whatsapp' ? <WhatsappView /> : panel === 'promotor' ? <PromotorView compact /> : <VecinoView demoControls />}
+        <div className="phone-frame">
+          <div className="demo-panel">
+            {panel === 'whatsapp' ? <WhatsappView /> : panel === 'promotor' ? <PromotorView compact /> : <VecinoView demoControls />}
+          </div>
         </div>
       </section>
       <section className="demo-right">
-        <CoeView embedded />
+        <div className="phone-frame coe-phone">
+          <CoeView embedded mobileFrame />
+        </div>
       </section>
     </main>
   );
