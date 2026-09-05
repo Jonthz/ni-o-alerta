@@ -19,9 +19,10 @@ const emergencias: Array<[SenalEmergencia['tipo'], string, React.ReactNode]> = [
 ];
 
 export function WhatsappView() {
-  const { sendReport, sendSignal } = useStore();
+  const { sendReport, sendSignal, events, alertSpeechText } = useStore();
   const [report, setReport] = useState<ReporteVigilancia | null>(null);
   const [sentEmergency, setSentEmergency] = useState('');
+  const latestEvent = events.find((item) => item.sector_id === 'monte-sinai');
 
   const submitReport = (tipo: ReporteVigilancia['tipo']) => setReport(sendReport('whatsapp', tipo));
   const submitSignal = (tipo: SenalEmergencia['tipo']) => {
@@ -65,6 +66,14 @@ export function WhatsappView() {
           </>
         )}
         {sentEmergency && <p className="bubble bot">{sentEmergency}</p>}
+        {latestEvent && (latestEvent.nivel === 'naranja' || latestEvent.nivel === 'rojo') && (
+          <div className="bubble bot community-bubble">
+            <strong>Mensaje enviado al grupo comunitario</strong>
+            <span>{latestEvent.nivel === 'rojo' ? 'ALERTA GENERAL' : 'ALERTA DEL SECTOR'} · Monte Sinai Alto</span>
+            <span>{latestEvent.senales.length || 1} senales independientes cerca de MS-P07.</span>
+            <span>{alertSpeechText || 'Mantente atento y avisa a tus vecinos cercanos.'}</span>
+          </div>
+        )}
       </div>
     </main>
   );

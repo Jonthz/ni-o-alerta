@@ -1,50 +1,59 @@
+import { MapPinned } from 'lucide-react';
 import { useStore } from '../store';
 import { SectorMap } from './Map';
-import type { Vivienda } from '../types';
 import { Button } from './components/Button';
 
-const states: Vivienda['estado'][] = ['sin_dato', 'evacuado', 'sin_contacto', 'afectado'];
+const priorityPoints = [
+  {
+    id: 'MS-P07',
+    nombre: 'MS-P07',
+    lat: -2.091,
+    lon: -79.9881,
+    detalle: 'Prioridad alta por deformacion acumulada Sentinel-1',
+  },
+  {
+    id: 'MS-Ladera-02',
+    nombre: 'Ladera norte',
+    lat: -2.0899,
+    lon: -79.9874,
+    detalle: 'Punto rojo de vigilancia satelital',
+  },
+  {
+    id: 'MS-Canal-03',
+    nombre: 'Canal de agua',
+    lat: -2.0922,
+    lon: -79.989,
+    detalle: 'Cambio observado cerca de viviendas',
+  },
+];
 
 export function PromotorView({ compact = false }: { compact?: boolean }) {
-  const { sectors, viviendas, forceRed, updateHouse } = useStore();
+  const { sectors, forceRed } = useStore();
   return (
     <main className={compact ? 'promotor shell compact-view' : 'promotor shell'}>
       <header className="topbar">
         <div>
-          <span className="eyebrow">Promotor comunitario</span>
-          <h1>Monte Sinai Alto</h1>
+          <span className="eyebrow">Delegado comunitario</span>
+          <h1>Puntos por revisar</h1>
         </div>
         <strong className="offline-badge">MODO OFFLINE — datos cacheados el 04/09</strong>
       </header>
-      <section className="sentinel-card">
+
+      <section className="sentinel-card simple-sentinel">
         <span>Dato satelital precomputado para demostracion</span>
-        <h2>PRIORIDAD ALTA DE INSPECCION</h2>
-        <ul>
-          <li>Deformacion Sentinel-1: 11,2 mm/anio.</li>
-          <li>Tendencia: movimiento elevado.</li>
-          <li>Reportes vecinales recientes: 9.</li>
-          <li>Punto prioritario: MS-P07.</li>
-          <li>Ultima actualizacion satelital: 04/09/2026.</li>
-          <li>Calidad/confianza del dato: alta.</li>
-          <li>Accion sugerida: inspeccionar MS-P07 y contactar las viviendas cercanas.</li>
-        </ul>
-        <ol>
-          <li>MS-P07 - prioridad alta.</li>
-          <li>Viviendas cercanas sin contacto.</li>
-          <li>Otros puntos con reportes recientes.</li>
-        </ol>
+        <h2><MapPinned size={22} /> 3 puntos rojos para mirar primero</h2>
+        <p>El satelite no predice. Solo marca donde conviene que la comunidad revise.</p>
       </section>
+
       <div className="promotor-grid">
-        <SectorMap sectors={sectors.filter((item) => item.id === 'monte-sinai')} viviendas={viviendas} />
-        <aside className="house-list">
+        <SectorMap sectors={sectors.filter((item) => item.id === 'monte-sinai')} priorityPoints={priorityPoints} satellite />
+        <aside className="house-list simple-list">
           <Button variant="destructive" size="lg" onClick={forceRed}>Confirmar alerta</Button>
-          {viviendas.map((home) => (
-            <label key={home.id}>
-              <span>{home.id} · {home.personas} personas</span>
-              <select value={home.estado} onChange={(event) => updateHouse(home.id, event.target.value as Vivienda['estado'])}>
-                {states.map((state) => <option key={state}>{state}</option>)}
-              </select>
-            </label>
+          {priorityPoints.map((point, index) => (
+            <article className="priority-row" key={point.id}>
+              <strong>{index + 1}. {point.nombre}</strong>
+              <span>{point.detalle}</span>
+            </article>
           ))}
         </aside>
       </div>

@@ -272,6 +272,42 @@ p {
   box-shadow: inset 0 0 0 3px rgba(22, 163, 74, 0.12);
 }
 
+.community-notice {
+  border-radius: 8px;
+  color: white;
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 16px;
+}
+
+.community-notice.naranja {
+  background: #ea580c;
+}
+
+.community-notice.rojo {
+  background: #dc2626;
+}
+
+.community-notice span {
+  font-size: 0.82rem;
+  font-weight: 1000;
+  opacity: 0.9;
+  text-transform: uppercase;
+}
+
+.community-notice h2 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.community-notice p {
+  font-size: 1.15rem;
+  font-weight: 850;
+  line-height: 1.35;
+  margin: 0;
+}
+
 .folio {
   color: #166534;
   font-size: 2.4rem;
@@ -485,8 +521,16 @@ p {
 }
 
 .sentinel-card h2 {
+  align-items: center;
   color: #b45309;
+  display: flex;
+  gap: 8px;
   margin: 6px 0 10px;
+}
+
+.simple-sentinel p {
+  font-weight: 800;
+  margin: 0;
 }
 
 .sentinel-card ul,
@@ -528,6 +572,27 @@ p {
   padding: 14px;
 }
 
+.simple-list {
+  align-content: start;
+}
+
+.priority-row {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+}
+
+.priority-row strong {
+  color: #991b1b;
+}
+
+.priority-row span {
+  color: #4b5563;
+  font-size: 0.92rem;
+}
+
 .house-list label {
   display: grid;
   gap: 6px;
@@ -541,7 +606,8 @@ p {
 }
 
 .dot-marker span,
-.home-marker span {
+.home-marker span,
+.priority-marker span {
   border: 2px solid white;
   border-radius: 999px;
   display: block;
@@ -557,6 +623,13 @@ p {
   background: #2563eb;
   height: 14px;
   width: 14px;
+}
+
+.priority-marker span {
+  background: #dc2626;
+  box-shadow: 0 0 0 7px rgba(220, 38, 38, 0.24);
+  height: 30px;
+  width: 30px;
 }
 
 .sector-label span {
@@ -680,6 +753,12 @@ p {
 }
 
 .receipt {
+  display: grid;
+  gap: 5px;
+}
+
+.community-bubble {
+  border: 2px solid #ea580c;
   display: grid;
   gap: 5px;
 }

@@ -11,10 +11,12 @@ const buttons: Array<[SenalEmergencia['tipo'], string, React.ReactNode, 'destruc
 ];
 
 export function VecinoView({ demoControls = false }: { demoControls?: boolean }) {
-  const { online, setOnline, sendSignal, sendReport, sendDemoSecondDeviceSignal, pending, lastAck, reports, sectors, alertSpeechText, replayAlert } = useStore();
+  const { online, setOnline, sendSignal, sendReport, sendDemoSecondDeviceSignal, pending, lastAck, reports, sectors, events, alertSpeechText, replayAlert } = useStore();
   const [confirmation, setConfirmation] = useState<ReporteVigilancia | null>(null);
   const sector = sectors.find((item) => item.id === 'monte-sinai')!;
   const sameSector = reports.filter((item) => item.sector_id === 'monte-sinai').length;
+  const latestEvent = events.find((item) => item.sector_id === 'monte-sinai');
+  const communityNotice = latestEvent && (latestEvent.nivel === 'naranja' || latestEvent.nivel === 'rojo');
 
   return (
     <main className="vecino shell">
@@ -27,6 +29,18 @@ export function VecinoView({ demoControls = false }: { demoControls?: boolean })
           MODO AVION
         </Button>
       </header>
+
+      {communityNotice && (
+        <section className={`community-notice ${latestEvent.nivel}`}>
+          <span>Mensaje comunitario recibido</span>
+          <h2>{latestEvent.nivel === 'rojo' ? 'ALERTA GENERAL' : 'ALERTA DEL SECTOR'}</h2>
+          <p>
+            Monte Sinai Alto: {latestEvent.senales.length || 1} senales independientes cerca de MS-P07.
+            {latestEvent.nivel === 'rojo' ? ' Sal de tu casa ahora si es seguro hacerlo.' : ' Mantente atento y avisa a tus vecinos cercanos.'}
+          </p>
+          {alertSpeechText && <Button variant="destructive" size="sm" onClick={replayAlert}>Escuchar mensaje</Button>}
+        </section>
+      )}
 
       <section className="emergency">
         <h2>Emergencia</h2>

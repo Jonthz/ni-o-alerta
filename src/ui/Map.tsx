@@ -6,12 +6,14 @@ const colors = { verde: '#16a34a', amarillo: '#eab308', naranja: '#ea580c', rojo
 
 const marker = new L.DivIcon({ className: 'dot-marker', html: '<span></span>', iconSize: [16, 16] });
 const homeMarker = new L.DivIcon({ className: 'home-marker', html: '<span></span>', iconSize: [14, 14] });
+const priorityMarker = new L.DivIcon({ className: 'priority-marker', html: '<span></span>', iconSize: [30, 30] });
 
-export function SectorMap({ sectors, reports = [], events = [], viviendas = [], dark = false, satellite = false, onSectorClick }: {
+export function SectorMap({ sectors, reports = [], events = [], viviendas = [], priorityPoints = [], dark = false, satellite = false, onSectorClick }: {
   sectors: Sector[];
   reports?: ReporteVigilancia[];
   events?: Evento[];
   viviendas?: Vivienda[];
+  priorityPoints?: Array<{ id: string; nombre: string; lat: number; lon: number; detalle: string }>;
   dark?: boolean;
   satellite?: boolean;
   onSectorClick?: (sector: Sector) => void;
@@ -51,6 +53,11 @@ export function SectorMap({ sectors, reports = [], events = [], viviendas = [], 
       {viviendas.map((home) => (
         <Marker key={home.id} position={[home.lat, home.lon]} icon={homeMarker}>
           <Popup>{home.id} · {home.personas} personas · {home.estado}</Popup>
+        </Marker>
+      ))}
+      {priorityPoints.map((point) => (
+        <Marker key={point.id} position={[point.lat, point.lon]} icon={priorityMarker}>
+          <Popup><strong>{point.nombre}</strong><br />{point.detalle}</Popup>
         </Marker>
       ))}
       {events.map((event) => (
