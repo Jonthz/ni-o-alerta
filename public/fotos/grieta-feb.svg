@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480">
+  <rect width="640" height="480" fill="#c8b7a0"/>
+  <path d="M0 92H640M0 190H640M0 288H640M0 386H640" stroke="#a48f78" stroke-width="5"/>
+  <path d="M122 0V480M256 0V480M391 0V480M526 0V480" stroke="#b49d84" stroke-width="4"/>
+  <path d="M330 83l-28 63 31 39-43 65 32 43-55 105" fill="none" stroke="#231f1b" stroke-width="12" stroke-linecap="round"/>
+  <path d="M304 151l-50-22M327 188l53-24M317 294l55 32M287 364l-39 26" stroke="#231f1b" stroke-width="7" stroke-linecap="round"/>
+  <text x="28" y="438" fill="#1f2937" font-family="Arial" font-size="34" font-weight="700">03 feb</text>
+</svg>
